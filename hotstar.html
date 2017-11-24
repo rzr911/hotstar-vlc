@@ -1,0 +1,48 @@
+<title>Hotstar Streamer</title>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+<script>
+var val="";
+function sub(){
+
+
+var str = document.getElementById("url").value;
+if(str.indexOf("http")>=0 || str.indexOf("https")>=0 || str.indexOf(".")>=0)
+{
+var lastSlash = str.lastIndexOf("/");
+var id=str.substring(lastSlash+1);
+}
+else
+var id=str;
+var purl="http://getcdn.hotstar.com/AVS/besc?action=GetCDN&asJson=Y&channel=TABLET&id="+id+"&type=VOD";
+console.log(purl);
+
+ $.ajax({
+                    url: purl,
+                    dataType: 'jsonp',
+                    success: function(data){
+                     val=data.resultObj.src;
+					 if(Hls.isSupported()) {
+    var video = document.getElementById('video');
+    var hls = new Hls();
+	//console.log(val);
+    hls.loadSource(val);
+    hls.attachMedia(video);
+    hls.on(Hls.Events.MANIFEST_PARSED,function() {
+      video.play();
+  });
+  video.controls=true;
+ }
+                        }
+                       
+                    }
+                );
+console.log(val);
+
+}</script>
+<input type="text" id="url">
+<button onclick="sub()">Submit</button><br/>
+<video id="video"></video>
+
+
