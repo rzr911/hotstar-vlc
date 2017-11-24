@@ -1,6 +1,7 @@
 # hotstar-vlc
 Watch a hotstar video using vlc or a browser
 
+No GeoRestrictions and no flash required
 
 # Dependencies
 1. python2.7
